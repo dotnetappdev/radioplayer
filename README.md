@@ -46,6 +46,11 @@ A comprehensive radio player app built with React Native (Expo) that replicates 
 - **Edit Station screen** for modifying user-added stations
 - **Delete functionality** with confirmation dialogs and history cleanup
 - **Data protection** - users cannot modify built-in stations
+- **FMStream Integration** - Import stations from FMStream with one-click
+  - Automatic deduplication to prevent duplicate stations
+  - Batch import with progress feedback
+  - Support for multiple genres and countries
+  - See [FMStream Integration Guide](docs/fmstream-integration.md) for details
 
 ### 🔍 Search & Discovery
 - **Real-time search** with debounced input across station names, genres, and descriptions

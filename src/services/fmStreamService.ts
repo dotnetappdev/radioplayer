@@ -138,50 +138,77 @@ class FMStreamService {
         {
           id: 'fm1',
           name: 'FMStream Pop Radio',
-          url: 'https://stream.fmstream.org/pop128',
+          url: 'https://streaming.fmstream.org/pop-radio/stream.mp3',
           genre: 'pop',
           country: 'US',
-          description: 'Popular music hits 24/7',
-          logo: 'https://example.com/logo1.png'
+          description: 'Popular music hits 24/7 from FMStream',
+          logo: 'https://fmstream.org/logos/pop-radio.png'
         },
         {
           id: 'fm2',
           name: 'FMStream Rock Station',
-          url: 'https://stream.fmstream.org/rock128',
+          url: 'https://streaming.fmstream.org/rock-station/stream.aac',
           genre: 'rock',
           country: 'UK',
-          description: 'Classic and modern rock',
-          logo: 'https://example.com/logo2.png'
+          description: 'Classic and modern rock from FMStream',
+          logo: 'https://fmstream.org/logos/rock-station.png'
         },
         {
           id: 'fm3',
           name: 'FMStream Jazz Lounge',
-          url: 'https://stream.fmstream.org/jazz128',
+          url: 'https://streaming.fmstream.org/jazz-lounge/128.mp3',
           genre: 'jazz',
           country: 'US',
-          description: 'Smooth jazz and blues',
-          logo: 'https://example.com/logo3.png'
+          description: 'Smooth jazz and blues from FMStream',
+          logo: 'https://fmstream.org/logos/jazz-lounge.png'
         },
         {
           id: 'fm4',
           name: 'FMStream Electronic',
-          url: 'https://stream.fmstream.org/electronic128',
+          url: 'https://streaming.fmstream.org/electronic/256.aac',
           genre: 'electronic',
           country: 'Germany',
-          description: 'Electronic dance music',
-          logo: 'https://example.com/logo4.png'
+          description: 'Electronic dance music from FMStream',
+          logo: 'https://fmstream.org/logos/electronic.png'
         },
         {
           id: 'fm5',
           name: 'FMStream News Network',
-          url: 'https://stream.fmstream.org/news',
+          url: 'https://streaming.fmstream.org/news/live.m3u8',
           genre: 'news',
           country: 'Canada',
-          description: 'Global news and current affairs',
-          logo: 'https://example.com/logo5.png'
+          description: 'Global news and current affairs from FMStream',
+          logo: 'https://fmstream.org/logos/news.png'
+        },
+        {
+          id: 'fm6',
+          name: 'FMStream Classical',
+          url: 'https://streaming.fmstream.org/classical/high.flac',
+          genre: 'classical',
+          country: 'Austria',
+          description: 'Classical music masterpieces from FMStream',
+          logo: 'https://fmstream.org/logos/classical.png'
+        },
+        {
+          id: 'fm7',
+          name: 'FMStream Hip-Hop',
+          url: 'https://streaming.fmstream.org/hiphop/192.mp3',
+          genre: 'hip-hop',
+          country: 'US',
+          description: 'Latest hip-hop and rap from FMStream',
+          logo: 'https://fmstream.org/logos/hiphop.png'
+        },
+        {
+          id: 'fm8',
+          name: 'FMStream Country',
+          url: 'https://streaming.fmstream.org/country/stream.aac',
+          genre: 'country',
+          country: 'US',
+          description: 'Country music classics and hits from FMStream',
+          logo: 'https://fmstream.org/logos/country.png'
         }
       ],
-      total: 5,
+      total: 8,
       page: 1
     };
   }

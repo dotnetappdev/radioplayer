@@ -134,7 +134,9 @@ class StationImportService {
       
       const fmStreamStations = allStations.filter((station: RadioStation) => 
         !station.isUserAdded && 
-        (station.streamUrl.includes('fmstream') || station.description?.includes('FMStream'))
+        (station.streamUrl.includes('fmstream') || 
+         station.description?.includes('FMStream') ||
+         station.description?.includes('from FMStream'))
       ).length;
       
       const userStations = allStations.filter((station: RadioStation) => station.isUserAdded).length;
@@ -165,7 +167,9 @@ class StationImportService {
       const allStations = await databaseService.getAllStations();
       const fmStreamStations = allStations.filter((station: RadioStation) => 
         !station.isUserAdded && 
-        (station.streamUrl.includes('fmstream') || station.description?.includes('FMStream'))
+        (station.streamUrl.includes('fmstream') || 
+         station.description?.includes('FMStream') ||
+         station.description?.includes('from FMStream'))
       );
       
       let removedCount = 0;
