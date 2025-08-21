@@ -113,7 +113,7 @@ export function RadioStationList({ onStationPress }: RadioStationListProps) {
         Radio Stations ({stations.length})
       </ThemedText>
       <ThemedText style={styles.subtitle}>
-        UK, Northern Ireland, International & Worship stations
+        {stations.length} stations from UK, International & Specialty networks
       </ThemedText>
       <FlatList
         data={stations}

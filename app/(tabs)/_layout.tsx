@@ -37,7 +37,14 @@ export default function TabLayout() {
         name="explore"
         options={{
           title: 'Stations',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="radio" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="podcasts"
+        options={{
+          title: 'Podcasts',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="mic.fill" color={color} />,
         }}
       />
     </Tabs>
