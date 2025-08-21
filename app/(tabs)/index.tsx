@@ -1,54 +1,108 @@
 import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { StyleSheet, ActivityIndicator } from 'react-native';
+import { router } from 'expo-router';
 
-import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { StationCard } from '@/src/components/StationCard';
+import { useAppContext } from '@/src/context/AppContext';
+import { RadioStation } from '@/src/db/types';
 
 export default function HomeScreen() {
+  const { 
+    stations, 
+    isLoading, 
+    error, 
+    playStation, 
+    toggleFavorite 
+  } = useAppContext();
+
+  const handlePlayStation = async (station: RadioStation) => {
+    await playStation(station);
+    router.push('/player');
+  };
+
+  const featuredStations = stations.slice(0, 4);
+  const recentStations = stations.filter(s => s.lastPlayed).slice(0, 3);
+  const favoriteStations = stations.filter(s => s.isFavorite).slice(0, 3);
+
+  if (isLoading) {
+    return (
+      <ThemedView style={styles.centerContainer}>
+        <ActivityIndicator size="large" />
+        <ThemedText style={styles.loadingText}>Loading stations...</ThemedText>
+      </ThemedView>
+    );
+  }
+
+  if (error) {
+    return (
+      <ThemedView style={styles.centerContainer}>
+        <ThemedText style={styles.errorText}>Error: {error}</ThemedText>
+      </ThemedView>
+    );
+  }
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
       headerImage={
         <Image
           source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
+          style={styles.headerImage}
         />
       }>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
+        <ThemedText type="title">Radio Player</ThemedText>
       </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
+
+      {featuredStations.length > 0 && (
+        <ThemedView style={styles.section}>
+          <ThemedText type="subtitle" style={styles.sectionTitle}>Featured Stations</ThemedText>
+          {featuredStations.map((station) => (
+            <StationCard
+              key={station.id}
+              station={station}
+              onPlay={handlePlayStation}
+              onToggleFavorite={toggleFavorite}
+            />
+          ))}
+        </ThemedView>
+      )}
+
+      {favoriteStations.length > 0 && (
+        <ThemedView style={styles.section}>
+          <ThemedText type="subtitle" style={styles.sectionTitle}>Favorites</ThemedText>
+          {favoriteStations.map((station) => (
+            <StationCard
+              key={station.id}
+              station={station}
+              onPlay={handlePlayStation}
+              onToggleFavorite={toggleFavorite}
+            />
+          ))}
+        </ThemedView>
+      )}
+
+      {recentStations.length > 0 && (
+        <ThemedView style={styles.section}>
+          <ThemedText type="subtitle" style={styles.sectionTitle}>Recently Played</ThemedText>
+          {recentStations.map((station) => (
+            <StationCard
+              key={station.id}
+              station={station}
+              onPlay={handlePlayStation}
+              onToggleFavorite={toggleFavorite}
+            />
+          ))}
+        </ThemedView>
+      )}
+
+      <ThemedView style={styles.section}>
+        <ThemedText type="subtitle" style={styles.sectionTitle}>Quick Access</ThemedText>
+        <ThemedText style={styles.helpText}>
+          Browse UK stations, world stations, or search by genre using the tabs below
         </ThemedText>
       </ThemedView>
     </ParallaxScrollView>
@@ -60,16 +114,39 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
+    marginBottom: 16,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  section: {
+    marginBottom: 24,
   },
-  reactLogo: {
+  sectionTitle: {
+    marginBottom: 12,
+    paddingHorizontal: 16,
+  },
+  helpText: {
+    opacity: 0.7,
+    paddingHorizontal: 16,
+    lineHeight: 20,
+  },
+  headerImage: {
     height: 178,
     width: 290,
     bottom: 0,
     left: 0,
     position: 'absolute',
+  },
+  centerContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 32,
+  },
+  loadingText: {
+    marginTop: 16,
+    opacity: 0.7,
+  },
+  errorText: {
+    color: '#FF3B30',
+    textAlign: 'center',
   },
 });
