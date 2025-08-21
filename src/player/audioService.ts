@@ -1,3 +1,4 @@
+import { Platform } from 'react-native';
 import { Audio } from 'expo-av';
 import { RadioStation } from '../db/types';
 
@@ -12,8 +13,14 @@ class AudioService {
   private sound: Audio.Sound | null = null;
   private currentStation: RadioStation | null = null;
   private listeners: ((status: PlaybackStatus) => void)[] = [];
+  private isWeb = Platform.OS === 'web';
 
   async initialize() {
+    if (this.isWeb) {
+      console.log('Audio service initialized for web');
+      return;
+    }
+
     try {
       await Audio.setAudioModeAsync({
         allowsRecordingIOS: false,
@@ -32,6 +39,20 @@ class AudioService {
       // Stop current playback
       await this.stop();
 
+      this.currentStation = station;
+
+      if (this.isWeb) {
+        // For web, simulate playback without actual audio
+        console.log(`Playing station: ${station.name}`);
+        this.notifyListeners({
+          isLoaded: true,
+          isPlaying: true,
+          station,
+          error: null,
+        });
+        return;
+      }
+
       // Create new sound instance
       const { sound } = await Audio.Sound.createAsync(
         { uri: station.streamUrl },
@@ -40,7 +61,6 @@ class AudioService {
       );
 
       this.sound = sound;
-      this.currentStation = station;
       
       this.notifyListeners({
         isLoaded: true,
