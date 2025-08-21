@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Alert,
   RefreshControl,
+  ActivityIndicator,
 } from 'react-native';
 import { router } from 'expo-router';
 import { IconSymbol } from '@/components/ui/IconSymbol';
@@ -14,12 +15,14 @@ import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { databaseService } from '@/src/db/database';
 import { RadioStation } from '@/src/db/types';
+import { stationImportService, ImportResult } from '@/src/services/stationImportService';
 
 export default function ManageStationsScreen() {
   const colorScheme = useColorScheme();
   const [userStations, setUserStations] = useState<RadioStation[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [importing, setImporting] = useState(false);
 
   const loadUserStations = useCallback(async () => {
     try {
@@ -77,6 +80,39 @@ export default function ManageStationsScreen() {
     );
   };
 
+  const handleImportFromFMStream = () => {
+    Alert.alert(
+      'Import from FMStream',
+      'This will fetch stations from FMStream and add them to your database. Do you want to continue?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Import',
+          onPress: async () => {
+            setImporting(true);
+            try {
+              await databaseService.initialize();
+              const result: ImportResult = await stationImportService.importFromFMStream(20); // Import 20 stations
+              
+              Alert.alert(
+                'Import Complete',
+                `Successfully imported ${result.totalImported} stations.\n` +
+                `Fetched: ${result.totalFetched}, Duplicates skipped: ${result.duplicatesSkipped}` +
+                (result.errors.length > 0 ? `\nErrors: ${result.errors.length}` : ''),
+                [{ text: 'OK', onPress: loadUserStations }]
+              );
+            } catch (error) {
+              console.error('Import failed:', error);
+              Alert.alert('Import Failed', 'Failed to import stations from FMStream. Please try again.');
+            } finally {
+              setImporting(false);
+            }
+          },
+        },
+      ]
+    );
+  };
+
   const renderStationItem = ({ item }: { item: RadioStation }) => (
     <View style={[styles.stationItem, { backgroundColor: Colors[colorScheme ?? 'light'].card }]}>
       <View style={styles.stationInfo}>
@@ -125,13 +161,29 @@ export default function ManageStationsScreen() {
         <Text style={[styles.title, { color: Colors[colorScheme ?? 'light'].text }]}>
           My Stations
         </Text>
-        <TouchableOpacity
-          style={[styles.addButton, { backgroundColor: Colors[colorScheme ?? 'light'].tint }]}
-          onPress={handleAddStation}
-        >
-          <IconSymbol name="plus" size={20} color="#FFFFFF" />
-          <Text style={styles.addButtonText}>Add Station</Text>
-        </TouchableOpacity>
+        <View style={styles.headerButtons}>
+          <TouchableOpacity
+            style={[styles.importButton, { backgroundColor: '#34C759' }]}
+            onPress={handleImportFromFMStream}
+            disabled={importing}
+          >
+            {importing ? (
+              <ActivityIndicator size="small" color="#FFFFFF" />
+            ) : (
+              <IconSymbol name="arrow.down" size={16} color="#FFFFFF" />
+            )}
+            <Text style={styles.importButtonText}>
+              {importing ? 'Importing...' : 'Import'}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.addButton, { backgroundColor: Colors[colorScheme ?? 'light'].tint }]}
+            onPress={handleAddStation}
+          >
+            <IconSymbol name="plus" size={20} color="#FFFFFF" />
+            <Text style={styles.addButtonText}>Add Station</Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
       <FlatList
@@ -169,6 +221,25 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: 'bold',
+    flex: 1,
+  },
+  headerButtons: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  importButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 20,
+    marginRight: 10,
+  },
+  importButtonText: {
+    color: '#FFFFFF',
+    fontWeight: '600',
+    marginLeft: 6,
+    fontSize: 14,
   },
   addButton: {
     flexDirection: 'row',
