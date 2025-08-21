@@ -36,15 +36,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    initializeApp();
-  }, [initializeApp]);
-
-  useEffect(() => {
-    const unsubscribe = audioService.addListener(setPlaybackStatus);
-    return unsubscribe;
-  }, []);
-
   const refreshStations = useCallback(async () => {
     try {
       const stationsData = await databaseService.getAllStations();
@@ -68,6 +59,15 @@ export function AppProvider({ children }: { children: ReactNode }) {
       setIsLoading(false);
     }
   }, [refreshStations]);
+
+  useEffect(() => {
+    initializeApp();
+  }, [initializeApp]);
+
+  useEffect(() => {
+    const unsubscribe = audioService.addListener(setPlaybackStatus);
+    return unsubscribe;
+  }, []);
 
   const playStation = async (station: RadioStation) => {
     try {
