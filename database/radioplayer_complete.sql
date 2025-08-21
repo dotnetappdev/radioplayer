@@ -68,8 +68,8 @@ INSERT INTO categories (name, description) VALUES
 
 -- BBC Stations
 INSERT INTO stations (name, frequency, stream_url, website_url, country, region, category_id, description) VALUES 
-('BBC Radio 1', '97-99 FM', 'https://stream.live.vc.bbcmedia.co.uk/bbc_radio_one', 'https://www.bbc.co.uk/radio1', 'United Kingdom', 'National', 16, 'The UKs number one hit music station'),
-('BBC Radio 2', '88-91 FM', 'https://stream.live.vc.bbcmedia.co.uk/bbc_radio_two', 'https://www.bbc.co.uk/radio2', 'United Kingdom', 'National', 16, 'The UKs most listened-to radio station'),
+('BBC Radio 1', '97-99 FM', 'https://stream.live.vc.bbcmedia.co.uk/bbc_radio_one', 'https://www.bbc.co.uk/radio1', 'United Kingdom', 'National', 16, 'The UK''s number one hit music station'),
+('BBC Radio 2', '88-91 FM', 'https://stream.live.vc.bbcmedia.co.uk/bbc_radio_two', 'https://www.bbc.co.uk/radio2', 'United Kingdom', 'National', 16, 'The UK''s most listened-to radio station'),
 ('BBC Radio 3', '90-93 FM', 'https://stream.live.vc.bbcmedia.co.uk/bbc_radio_three', 'https://www.bbc.co.uk/radio3', 'United Kingdom', 'National', 4, 'Classical music, jazz, world music and arts'),
 ('BBC Radio 4', '92-95 FM', 'https://stream.live.vc.bbcmedia.co.uk/bbc_radio_fourfm', 'https://www.bbc.co.uk/radio4', 'United Kingdom', 'National', 2, 'News, current affairs, arts and drama'),
 ('BBC Radio 5 Live', '693/909 MW', 'https://stream.live.vc.bbcmedia.co.uk/bbc_radio_five_live', 'https://www.bbc.co.uk/5live', 'United Kingdom', 'National', 3, 'Live news and sports coverage'),
@@ -77,10 +77,22 @@ INSERT INTO stations (name, frequency, stream_url, website_url, country, region,
 
 -- Commercial UK Stations
 ('Heart FM', '106.2 FM', 'https://media-ice.musicradio.com/HeartLondonMP3', 'https://www.heart.co.uk', 'United Kingdom', 'London', 11, 'Feel good music for adults'),
-('Capital FM', '95.8 FM', 'https://media-ice.musicradio.com/CapitalMP3', 'https://www.capitalfm.com', 'United Kingdom', 'London', 12, 'Today\'s hit music and chart toppers'),
+('Heart 80s', 'DAB/Online', 'https://media-ice.musicradio.com/Heart80sMP3', 'https://www.heart.co.uk/80s', 'United Kingdom', 'National', 11, 'The biggest hits from the 80s'),
+('Heart 90s', 'DAB/Online', 'https://media-ice.musicradio.com/Heart90sMP3', 'https://www.heart.co.uk/90s', 'United Kingdom', 'National', 11, 'The biggest hits from the 90s'),
+('Heart 00s', 'DAB/Online', 'https://media-ice.musicradio.com/Heart00sMP3', 'https://www.heart.co.uk/00s', 'United Kingdom', 'National', 11, 'The biggest hits from the 00s'),
+('Capital FM', '95.8 FM', 'https://media-ice.musicradio.com/CapitalMP3', 'https://www.capitalfm.com', 'United Kingdom', 'London', 12, 'Today''s hit music and chart toppers'),
 ('LBC', '97.3 FM', 'https://media-ice.musicradio.com/LBCLondonMP3', 'https://www.lbc.co.uk', 'United Kingdom', 'London', 2, 'Leading talk radio station'),
 ('Classic FM', '100-102 FM', 'https://media-ice.musicradio.com/ClassicFMMP3', 'https://www.classicfm.com', 'United Kingdom', 'National', 4, 'Classical music station'),
 ('Absolute Radio', '105.8 FM', 'https://icy-e-bab-04-gos.sharp-stream.com/absoluteradio.mp3', 'https://www.absoluteradio.co.uk', 'United Kingdom', 'National', 5, 'Rock and guitar music'),
+('Absolute 80s', 'DAB/Online', 'https://icy-e-bab-04-gos.sharp-stream.com/absolute80s.mp3', 'https://www.absoluteradio.co.uk/80s', 'United Kingdom', 'National', 5, 'The biggest rock hits from the 80s'),
+('Absolute Classic Rock', 'DAB/Online', 'https://icy-e-bab-04-gos.sharp-stream.com/absoluteclassicrock.mp3', 'https://www.absoluteradio.co.uk/classic-rock', 'United Kingdom', 'National', 5, 'Classic rock anthems and guitar legends'),
+('Absolute Radio 90s', 'DAB/Online', 'https://icy-e-bab-04-gos.sharp-stream.com/absolute90s.mp3', 'https://www.absoluteradio.co.uk/90s', 'United Kingdom', 'National', 5, 'The best rock hits from the 90s'),
+('Absolute Radio 00s', 'DAB/Online', 'https://icy-e-bab-04-gos.sharp-stream.com/absolute00s.mp3', 'https://www.absoluteradio.co.uk/00s', 'United Kingdom', 'National', 5, 'The best rock hits from the 00s'),
+('Virgin Radio UK', '105.8 FM', 'https://icy-e-bab-04-gos.sharp-stream.com/virginradiouk.mp3', 'https://www.virginradio.co.uk', 'United Kingdom', 'National', 5, 'Rock music and entertainment'),
+('Virgin Radio Classic Rock', 'DAB/Online', 'https://icy-e-bab-04-gos.sharp-stream.com/virginclassicrock.mp3', 'https://www.virginradio.co.uk/classic-rock', 'United Kingdom', 'National', 5, 'Classic rock hits and legends'),
+('Virgin Radio 80s', 'DAB/Online', 'https://icy-e-bab-04-gos.sharp-stream.com/virgin80s.mp3', 'https://www.virginradio.co.uk/80s', 'United Kingdom', 'National', 11, 'The biggest hits from the 80s'),
+('Virgin Radio 90s', 'DAB/Online', 'https://icy-e-bab-04-gos.sharp-stream.com/virgin90s.mp3', 'https://www.virginradio.co.uk/90s', 'United Kingdom', 'National', 11, 'The biggest hits from the 90s'),
+('Virgin Radio Groove', 'DAB/Online', 'https://icy-e-bab-04-gos.sharp-stream.com/virgingroove.mp3', 'https://www.virginradio.co.uk/groove', 'United Kingdom', 'National', 8, 'R&B, soul and funk classics'),
 ('Kiss FM', '100 FM', 'https://icy-e-bab-04-gos.sharp-stream.com/kissfmuk.mp3', 'https://www.kissfm.co.uk', 'United Kingdom', 'National', 7, 'Dance and electronic music');
 
 -- =====================================================
@@ -90,7 +102,7 @@ INSERT INTO stations (name, frequency, stream_url, website_url, country, region,
 INSERT INTO stations (name, frequency, stream_url, website_url, country, region, category_id, description) VALUES 
 ('BBC Radio Ulster', '92.4-95.4 FM', 'https://stream.live.vc.bbcmedia.co.uk/bbc_radio_ulster', 'https://www.bbc.co.uk/radioulster', 'United Kingdom', 'Northern Ireland', 13, 'BBC local radio for Northern Ireland'),
 ('BBC Radio Foyle', '93.1 FM', 'https://stream.live.vc.bbcmedia.co.uk/bbc_radio_foyle', 'https://www.bbc.co.uk/radiofoyle', 'United Kingdom', 'Northern Ireland', 13, 'BBC local radio for Derry/Londonderry area'),
-('Cool FM', '97.4 FM', 'https://icy-e-bab-04-gos.sharp-stream.com/coolfm.mp3', 'https://www.coolfm.co.uk', 'United Kingdom', 'Northern Ireland', 12, 'Northern Ireland\'s biggest hit music station'),
+('Cool FM', '97.4 FM', 'https://icy-e-bab-04-gos.sharp-stream.com/coolfm.mp3', 'https://www.coolfm.co.uk', 'United Kingdom', 'Northern Ireland', 12, 'Northern Ireland''s biggest hit music station'),
 ('U105', '105.8 FM', 'https://icy-e-bab-04-gos.sharp-stream.com/u105.mp3', 'https://www.u105.com', 'United Kingdom', 'Northern Ireland', 11, 'Best music and chat for Belfast');
 
 -- =====================================================
