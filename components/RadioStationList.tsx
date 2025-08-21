@@ -112,6 +112,9 @@ export function RadioStationList({ onStationPress }: RadioStationListProps) {
       <ThemedText type="title" style={styles.title}>
         Radio Stations ({stations.length})
       </ThemedText>
+      <ThemedText style={styles.subtitle}>
+        UK, Northern Ireland, International & Worship stations
+      </ThemedText>
       <FlatList
         data={stations}
         renderItem={renderStation}
@@ -135,7 +138,12 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   title: {
+    marginBottom: 8,
+  },
+  subtitle: {
     marginBottom: 16,
+    opacity: 0.7,
+    fontSize: 14,
   },
   list: {
     flex: 1,
