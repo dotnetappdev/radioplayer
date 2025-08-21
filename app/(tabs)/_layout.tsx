@@ -63,6 +63,13 @@ export default function TabLayout() {
             tabBarIcon: ({ color }) => <IconSymbol size={28} name="magnifyingglass" color={color} />,
           }}
         />
+        <Tabs.Screen
+          name="manage-stations"
+          options={{
+            title: 'Manage',
+            tabBarIcon: ({ color }) => <IconSymbol size={28} name="plus.circle" color={color} />,
+          }}
+        />
       </Tabs>
       <NowPlayingBar />
     </>

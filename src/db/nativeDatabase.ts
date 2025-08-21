@@ -1,6 +1,6 @@
 import { Platform } from 'react-native';
 import * as SQLite from 'expo-sqlite';
-import { RadioStation, Genre } from './types';
+import { RadioStation, Genre, StreamType } from './types';
 
 class DatabaseService {
   private db: SQLite.SQLiteDatabase | null = null;
@@ -33,6 +33,8 @@ class DatabaseService {
         country: 'UK',
         description: 'The best new music and entertainment',
         isFavorite: false,
+        streamType: StreamType.HTTP,
+        isUserAdded: false,
       },
       {
         id: 2,
@@ -42,6 +44,8 @@ class DatabaseService {
         country: 'UK',
         description: 'Popular music and culture',
         isFavorite: true,
+        streamType: StreamType.HTTP,
+        isUserAdded: false,
       },
       {
         id: 3,
@@ -51,6 +55,8 @@ class DatabaseService {
         country: 'UK',
         description: 'News, current affairs and factual programming',
         isFavorite: false,
+        streamType: StreamType.HTTP,
+        isUserAdded: false,
       },
       {
         id: 4,
@@ -60,6 +66,8 @@ class DatabaseService {
         country: 'UK',
         description: "The UK's No.1 Hit Music Station",
         isFavorite: false,
+        streamType: StreamType.HTTP,
+        isUserAdded: false,
       },
       {
         id: 5,
@@ -69,6 +77,8 @@ class DatabaseService {
         country: 'UK',
         description: 'More Music Variety',
         isFavorite: false,
+        streamType: StreamType.HTTP,
+        isUserAdded: false,
       },
       {
         id: 6,
@@ -78,6 +88,8 @@ class DatabaseService {
         country: 'US',
         description: 'National Public Radio',
         isFavorite: false,
+        streamType: StreamType.HTTPS,
+        isUserAdded: false,
       },
       {
         id: 7,
@@ -87,6 +99,8 @@ class DatabaseService {
         country: 'UK',
         description: 'The sound of jazz',
         isFavorite: false,
+        streamType: StreamType.HTTP,
+        isUserAdded: false,
       },
     ];
   }
@@ -116,6 +130,8 @@ class DatabaseService {
         description TEXT,
         isFavorite INTEGER DEFAULT 0,
         lastPlayed TEXT,
+        streamType TEXT DEFAULT 'http',
+        isUserAdded INTEGER DEFAULT 0,
         createdAt TEXT DEFAULT CURRENT_TIMESTAMP
       );
     `);
@@ -171,6 +187,8 @@ class DatabaseService {
         genre: 'pop',
         country: 'UK',
         description: 'The best new music and entertainment',
+        streamType: 'http',
+        isUserAdded: 0,
       },
       {
         name: 'BBC Radio 2',
@@ -178,6 +196,8 @@ class DatabaseService {
         genre: 'pop',
         country: 'UK',
         description: 'Popular music and culture',
+        streamType: 'http',
+        isUserAdded: 0,
       },
       {
         name: 'BBC Radio 4',
@@ -185,6 +205,8 @@ class DatabaseService {
         genre: 'news',
         country: 'UK',
         description: 'News, current affairs and factual programming',
+        streamType: 'http',
+        isUserAdded: 0,
       },
       {
         name: 'Capital FM',
@@ -192,6 +214,8 @@ class DatabaseService {
         genre: 'pop',
         country: 'UK',
         description: "The UK's No.1 Hit Music Station",
+        streamType: 'http',
+        isUserAdded: 0,
       },
       {
         name: 'Heart FM',
@@ -199,6 +223,8 @@ class DatabaseService {
         genre: 'pop',
         country: 'UK',
         description: 'More Music Variety',
+        streamType: 'http',
+        isUserAdded: 0,
       },
       {
         name: 'NPR News',
@@ -206,6 +232,8 @@ class DatabaseService {
         genre: 'news',
         country: 'US',
         description: 'National Public Radio',
+        streamType: 'https',
+        isUserAdded: 0,
       },
       {
         name: 'Jazz FM',
@@ -213,13 +241,15 @@ class DatabaseService {
         genre: 'jazz',
         country: 'UK',
         description: 'The sound of jazz',
+        streamType: 'http',
+        isUserAdded: 0,
       },
     ];
 
     for (const station of stations) {
       await this.db.runAsync(
-        'INSERT INTO stations (name, streamUrl, genre, country, description) VALUES (?, ?, ?, ?, ?)',
-        [station.name, station.streamUrl, station.genre, station.country, station.description]
+        'INSERT INTO stations (name, streamUrl, genre, country, description, streamType, isUserAdded) VALUES (?, ?, ?, ?, ?, ?, ?)',
+        [station.name, station.streamUrl, station.genre, station.country, station.description, station.streamType, station.isUserAdded]
       );
     }
   }
@@ -235,6 +265,8 @@ class DatabaseService {
     return rows.map(row => ({
       ...row,
       isFavorite: Boolean(row.isFavorite),
+      isUserAdded: Boolean(row.isUserAdded),
+      streamType: row.streamType as StreamType,
       lastPlayed: row.lastPlayed ? new Date(row.lastPlayed) : undefined,
     }));
   }
@@ -250,6 +282,8 @@ class DatabaseService {
     return rows.map(row => ({
       ...row,
       isFavorite: Boolean(row.isFavorite),
+      isUserAdded: Boolean(row.isUserAdded),
+      streamType: row.streamType as StreamType,
       lastPlayed: row.lastPlayed ? new Date(row.lastPlayed) : undefined,
     }));
   }
@@ -265,6 +299,8 @@ class DatabaseService {
     return rows.map(row => ({
       ...row,
       isFavorite: Boolean(row.isFavorite),
+      isUserAdded: Boolean(row.isUserAdded),
+      streamType: row.streamType as StreamType,
       lastPlayed: row.lastPlayed ? new Date(row.lastPlayed) : undefined,
     }));
   }
@@ -280,6 +316,8 @@ class DatabaseService {
     return rows.map(row => ({
       ...row,
       isFavorite: Boolean(row.isFavorite),
+      isUserAdded: Boolean(row.isUserAdded),
+      streamType: row.streamType as StreamType,
       lastPlayed: row.lastPlayed ? new Date(row.lastPlayed) : undefined,
     }));
   }
@@ -304,6 +342,8 @@ class DatabaseService {
     return rows.map(row => ({
       ...row,
       isFavorite: Boolean(row.isFavorite),
+      isUserAdded: Boolean(row.isUserAdded),
+      streamType: row.streamType as StreamType,
       lastPlayed: row.lastPlayed ? new Date(row.lastPlayed) : undefined,
     }));
   }
@@ -380,8 +420,138 @@ class DatabaseService {
     return rows.map(row => ({
       ...row,
       isFavorite: Boolean(row.isFavorite),
+      isUserAdded: Boolean(row.isUserAdded),
+      streamType: row.streamType as StreamType,
       lastPlayed: row.lastPlayed ? new Date(row.lastPlayed) : undefined,
     }));
+  }
+
+  // CRUD Operations
+  async createStation(station: Omit<RadioStation, 'id' | 'isFavorite' | 'lastPlayed'>): Promise<number> {
+    if (this.isWeb) {
+      // For web, just log and return a mock ID
+      console.log('Create station:', station);
+      return Math.floor(Math.random() * 10000) + 1000;
+    }
+
+    if (!this.db) throw new Error('Database not initialized');
+    
+    const result = await this.db.runAsync(
+      'INSERT INTO stations (name, streamUrl, logoUrl, genre, country, description, streamType, isUserAdded) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+      [
+        station.name,
+        station.streamUrl,
+        station.logoUrl || null,
+        station.genre,
+        station.country,
+        station.description || null,
+        station.streamType,
+        1 // isUserAdded = true
+      ]
+    );
+    
+    return result.lastInsertRowId;
+  }
+
+  async updateStation(id: number, station: Partial<Omit<RadioStation, 'id' | 'isUserAdded'>>): Promise<void> {
+    if (this.isWeb) {
+      console.log('Update station:', id, station);
+      return;
+    }
+
+    if (!this.db) throw new Error('Database not initialized');
+    
+    const fields = [];
+    const values = [];
+    
+    if (station.name !== undefined) {
+      fields.push('name = ?');
+      values.push(station.name);
+    }
+    if (station.streamUrl !== undefined) {
+      fields.push('streamUrl = ?');
+      values.push(station.streamUrl);
+    }
+    if (station.logoUrl !== undefined) {
+      fields.push('logoUrl = ?');
+      values.push(station.logoUrl);
+    }
+    if (station.genre !== undefined) {
+      fields.push('genre = ?');
+      values.push(station.genre);
+    }
+    if (station.country !== undefined) {
+      fields.push('country = ?');
+      values.push(station.country);
+    }
+    if (station.description !== undefined) {
+      fields.push('description = ?');
+      values.push(station.description);
+    }
+    if (station.streamType !== undefined) {
+      fields.push('streamType = ?');
+      values.push(station.streamType);
+    }
+    
+    if (fields.length === 0) return;
+    
+    values.push(id);
+    await this.db.runAsync(
+      `UPDATE stations SET ${fields.join(', ')} WHERE id = ?`,
+      values
+    );
+  }
+
+  async deleteStation(id: number): Promise<void> {
+    if (this.isWeb) {
+      console.log('Delete station:', id);
+      return;
+    }
+
+    if (!this.db) throw new Error('Database not initialized');
+    
+    // First delete from play history
+    await this.db.runAsync('DELETE FROM play_history WHERE stationId = ?', [id]);
+    
+    // Then delete the station
+    await this.db.runAsync('DELETE FROM stations WHERE id = ?', [id]);
+  }
+
+  async getUserAddedStations(): Promise<RadioStation[]> {
+    if (this.isWeb) {
+      // Return empty array for web demo
+      return [];
+    }
+
+    if (!this.db) throw new Error('Database not initialized');
+    
+    const rows = await this.db.getAllAsync<any>('SELECT * FROM stations WHERE isUserAdded = 1 ORDER BY name');
+    return rows.map(row => ({
+      ...row,
+      isFavorite: Boolean(row.isFavorite),
+      isUserAdded: Boolean(row.isUserAdded),
+      streamType: row.streamType as StreamType,
+      lastPlayed: row.lastPlayed ? new Date(row.lastPlayed) : undefined,
+    }));
+  }
+
+  async getStationById(id: number): Promise<RadioStation | null> {
+    if (this.isWeb) {
+      return this.getMockStations().find(s => s.id === id) || null;
+    }
+
+    if (!this.db) throw new Error('Database not initialized');
+    
+    const row = await this.db.getFirstAsync<any>('SELECT * FROM stations WHERE id = ?', [id]);
+    if (!row) return null;
+    
+    return {
+      ...row,
+      isFavorite: Boolean(row.isFavorite),
+      isUserAdded: Boolean(row.isUserAdded),
+      streamType: row.streamType as StreamType,
+      lastPlayed: row.lastPlayed ? new Date(row.lastPlayed) : undefined,
+    };
   }
 }
 

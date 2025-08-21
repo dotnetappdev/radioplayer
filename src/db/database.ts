@@ -1,5 +1,4 @@
 import { Platform } from 'react-native';
-import { RadioStation, Genre } from './types';
 
 // Conditionally import database services
 let databaseService: any;

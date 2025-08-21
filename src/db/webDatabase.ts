@@ -1,4 +1,4 @@
-import { RadioStation, Genre } from './types';
+import { RadioStation, Genre, StreamType } from './types';
 
 class WebDatabaseService {
   private mockStations: RadioStation[] = [
@@ -10,6 +10,8 @@ class WebDatabaseService {
       country: 'UK',
       description: 'The best new music and entertainment',
       isFavorite: false,
+      streamType: StreamType.HTTP,
+      isUserAdded: false,
     },
     {
       id: 2,
@@ -19,6 +21,8 @@ class WebDatabaseService {
       country: 'UK',
       description: 'Popular music and culture',
       isFavorite: true,
+      streamType: StreamType.HTTP,
+      isUserAdded: false,
     },
     {
       id: 3,
@@ -28,6 +32,8 @@ class WebDatabaseService {
       country: 'UK',
       description: 'News, current affairs and factual programming',
       isFavorite: false,
+      streamType: StreamType.HTTP,
+      isUserAdded: false,
     },
     {
       id: 4,
@@ -37,6 +43,8 @@ class WebDatabaseService {
       country: 'UK',
       description: "The UK's No.1 Hit Music Station",
       isFavorite: false,
+      streamType: StreamType.HTTP,
+      isUserAdded: false,
     },
     {
       id: 5,
@@ -46,6 +54,8 @@ class WebDatabaseService {
       country: 'UK',
       description: 'More Music Variety',
       isFavorite: false,
+      streamType: StreamType.HTTP,
+      isUserAdded: false,
     },
     {
       id: 6,
@@ -55,6 +65,8 @@ class WebDatabaseService {
       country: 'US',
       description: 'National Public Radio',
       isFavorite: false,
+      streamType: StreamType.HTTPS,
+      isUserAdded: false,
     },
     {
       id: 7,
@@ -64,6 +76,8 @@ class WebDatabaseService {
       country: 'UK',
       description: 'The sound of jazz',
       isFavorite: false,
+      streamType: StreamType.HTTP,
+      isUserAdded: false,
     },
   ];
 
@@ -129,6 +143,44 @@ class WebDatabaseService {
 
   async getRecentlyPlayed(limit: number = 10): Promise<RadioStation[]> {
     return this.mockStations.slice(0, limit);
+  }
+
+  // CRUD Operations (Web implementation with mock data)
+  async createStation(station: Omit<RadioStation, 'id' | 'isFavorite' | 'lastPlayed'>): Promise<number> {
+    const id = Math.max(...this.mockStations.map(s => s.id)) + 1;
+    const newStation: RadioStation = {
+      ...station,
+      id,
+      isFavorite: false,
+      lastPlayed: undefined,
+    };
+    this.mockStations.push(newStation);
+    console.log('Created station (web mock):', newStation);
+    return id;
+  }
+
+  async updateStation(id: number, station: Partial<Omit<RadioStation, 'id' | 'isUserAdded'>>): Promise<void> {
+    const index = this.mockStations.findIndex(s => s.id === id);
+    if (index !== -1) {
+      this.mockStations[index] = { ...this.mockStations[index], ...station };
+      console.log('Updated station (web mock):', this.mockStations[index]);
+    }
+  }
+
+  async deleteStation(id: number): Promise<void> {
+    const index = this.mockStations.findIndex(s => s.id === id);
+    if (index !== -1) {
+      this.mockStations.splice(index, 1);
+      console.log('Deleted station (web mock):', id);
+    }
+  }
+
+  async getUserAddedStations(): Promise<RadioStation[]> {
+    return this.mockStations.filter(s => s.isUserAdded);
+  }
+
+  async getStationById(id: number): Promise<RadioStation | null> {
+    return this.mockStations.find(s => s.id === id) || null;
   }
 }
 

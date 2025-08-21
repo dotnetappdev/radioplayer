@@ -8,6 +8,16 @@ export interface RadioStation {
   description?: string;
   isFavorite: boolean;
   lastPlayed?: Date;
+  streamType: StreamType;
+  isUserAdded: boolean;
+}
+
+export enum StreamType {
+  HTTP = 'http',
+  HTTPS = 'https',
+  HLS = 'hls',
+  DASH = 'dash',
+  ICY = 'icy'
 }
 
 export interface Genre {
